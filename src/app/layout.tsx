@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "v0 Shaders",
-  description: "Shaders FTW!",
+  title: "Shader Playground",
+  description: "Shader Art",
 };
 
 export default function RootLayout({

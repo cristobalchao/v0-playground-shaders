@@ -33,7 +33,11 @@ const CONTROL_SCHEMA = {
 
 function ShaderScene() {
   const controls = useControls(CONTROL_SCHEMA, {
-    config: { mainLabel: "Shader Art", showGrid: false, showCopyButton: false },
+    config: {
+      mainLabel: "Shader Art Controls",
+      showGrid: false,
+      showCopyButton: false,
+    },
   });
 
   const uniforms: ShaderArtUniforms = {
