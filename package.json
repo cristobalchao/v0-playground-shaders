@@ -17,12 +17,12 @@
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
-    "@toriistudio/v0-playground-canvas": "^0.1.8",
+    "@toriistudio/v0-playground": "^0.7.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.522.0",
-    "next": "^15.0.0",
+    "next": "15.5.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.1",
@@ -38,5 +38,8 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.1",
     "typescript": "5.5.4"
+  },
+  "resolutions": {
+    "camera-controls": "3.1.0"
   }
 }

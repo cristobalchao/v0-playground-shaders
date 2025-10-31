@@ -1,4 +1,4 @@
-import preset from "@toriistudio/v0-playground-canvas/preset";
+import preset from "@toriistudio/v0-playground/preset";
 
 export default {
   presets: [preset],
