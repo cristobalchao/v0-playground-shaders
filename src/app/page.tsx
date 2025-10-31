@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  PlaygroundCanvas,
-  useControls,
-} from "@toriistudio/v0-playground-canvas";
+import { Canvas } from "@react-three/fiber";
+import { Playground, useControls } from "@toriistudio/v0-playground";
 
 import ShaderArt, { type ShaderArtUniforms } from "@/components/ShaderArt";
 
@@ -33,10 +31,12 @@ const CONTROL_SCHEMA = {
 
 function ShaderScene() {
   const controls = useControls(CONTROL_SCHEMA, {
+    componentName: "ShaderArt",
     config: {
       mainLabel: "Shader Art Controls",
       showGrid: false,
       showCopyButton: false,
+      showCodeSnippet: true,
     },
   });
 
@@ -54,8 +54,10 @@ function ShaderScene() {
 
 export default function Home() {
   return (
-    <PlaygroundCanvas>
-      <ShaderScene />
-    </PlaygroundCanvas>
+    <Playground>
+      <Canvas>
+        <ShaderScene />
+      </Canvas>
+    </Playground>
   );
 }
