@@ -1,63 +1,36 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { Playground, useControls } from "@toriistudio/v0-playground";
-
-import ShaderArt, { type ShaderArtUniforms } from "@/components/ShaderArt";
-
-const CONTROL_SCHEMA = {
-  uIterations: {
-    type: "number" as const,
-    value: 4,
-    min: 1,
-    max: 8,
-    step: 1,
-  },
-  uAmplitude: {
-    type: "number" as const,
-    value: 1.5,
-    min: 0.5,
-    max: 3,
-    step: 0.1,
-  },
-  uFreq: {
-    type: "number" as const,
-    value: 0.4,
-    min: 0.05,
-    max: 2,
-    step: 0.05,
-  },
-};
-
-function ShaderScene() {
-  const controls = useControls(CONTROL_SCHEMA, {
-    componentName: "ShaderArt",
-    config: {
-      mainLabel: "Shader Art Controls",
-      showGrid: false,
-      showCopyButton: false,
-      showCodeSnippet: true,
-    },
-  });
-
-  const uniforms: ShaderArtUniforms = {
-    uIterations: Math.max(
-      1,
-      Math.round(controls.uIterations ?? CONTROL_SCHEMA.uIterations.value)
-    ),
-    uAmplitude: controls.uAmplitude ?? CONTROL_SCHEMA.uAmplitude.value,
-    uFreq: controls.uFreq ?? CONTROL_SCHEMA.uFreq.value,
-  };
-
-  return <ShaderArt uniforms={uniforms} />;
-}
+import Link from "next/link";
 
 export default function Home() {
+  const links = [
+    { href: "/shader-art", label: "Shader Art" },
+    { href: "/gradient-effect", label: "Gradient Effect" },
+    { href: "/border-shape", label: "Border Shape" },
+    { href: "/sha-shape", label: "Sha Shape" },
+    { href: "/bram-no-blend", label: "Bram No Blend" },
+    { href: "/bram-no-blend-effects", label: "Bram No Blend Effects" },
+    { href: "/text-overlay", label: "Text Overlay" },
+    { href: "/diffuse-effect", label: "Diffuse Effect" },
+    { href: "/beam-edge-thin", label: "Beam Edge Thin" },
+    { href: "/beam-edge-thick", label: "Beam Edge Thick" },
+    { href: "/beam-rings", label: "Beam Rings" },
+    { href: "/replicate-diagonal", label: "Replicate Diagonal" },
+    { href: "/replicate-vertical", label: "Replicate Vertical" },
+    { href: "/blur-effect", label: "Blur Effect" },
+    { href: "/noise-effect", label: "Noise Effect" },
+    { href: "/glyph-dither", label: "Glyph Dither" },
+  ];
+
   return (
-    <Playground>
-      <Canvas>
-        <ShaderScene />
-      </Canvas>
-    </Playground>
+    <main>
+      <ul>
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href}>{link.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </main>
   );
 }
