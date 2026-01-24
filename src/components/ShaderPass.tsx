@@ -41,6 +41,9 @@ export type ShaderPassProps = {
   /** Optional: update a resolution uniform each frame */
   resolutionUniform?: string;
 
+  /** Optional: palette hex colors averaged into uPaletteColor/uHasPalette uniforms */
+  hexColors?: string[];
+
   /** Render priority in the frame loop (lower runs earlier) */
   priority?: number;
 };
@@ -59,6 +62,7 @@ export default function ShaderPass({
   enabled = true,
   timeUniform,
   resolutionUniform,
+  hexColors,
   priority = 0,
 }: ShaderPassProps) {
   const { gl, size } = useThree();
@@ -71,6 +75,43 @@ export default function ShaderPass({
   );
 
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+  const mixedPaletteColor = useMemo(() => {
+    if (!hexColors?.length) return null;
+    const mixed = new THREE.Color(0, 0, 0);
+    hexColors.forEach((hex) => {
+      const c = new THREE.Color(hex);
+      mixed.r += c.r;
+      mixed.g += c.g;
+      mixed.b += c.b;
+    });
+    mixed.r /= hexColors.length;
+    mixed.g /= hexColors.length;
+    mixed.b /= hexColors.length;
+    return mixed;
+  }, [hexColors]);
+
+  useEffect(() => {
+    if (!uniforms.uPaletteColor) {
+      uniforms.uPaletteColor = {
+        value: mixedPaletteColor ?? new THREE.Color(0, 0, 0),
+      };
+    } else {
+      (uniforms.uPaletteColor.value as THREE.Color).copy(
+        mixedPaletteColor ?? new THREE.Color(0, 0, 0),
+      );
+    }
+
+    if (!uniforms.uHasPalette) {
+      uniforms.uHasPalette = { value: mixedPaletteColor ? 1 : 0 };
+    } else {
+      uniforms.uHasPalette.value = mixedPaletteColor ? 1 : 0;
+    }
+
+    if (materialRef.current) {
+      materialRef.current.uniformsNeedUpdate = true;
+    }
+  }, [mixedPaletteColor, uniforms]);
 
   // Fullscreen quad geometry (two triangles) in clip-space
   const quadGeom = useMemo(() => {
